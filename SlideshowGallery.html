@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Slideshow / Carousel Gallery</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin:0; padding:0;
+    background:#fefefe;
+    padding-bottom: 100px;
+  }
+  header {
+    background:#222;
+    color:white;
+    padding:12px 20px;
+    text-align:center;
+  }
+  /* nav a {
+    color:white;
+    margin: 0 10px;
+    text-decoration:none;
+    font-weight:bold;
+  }
+  nav a:hover {
+    text-decoration:underline;
+  } */
+   .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: right;
+  }
+
+  .menu li {
+    position: relative;
+  }
+
+  .menu > li {
+    margin-right: 20px;
+  }
+
+  .menu a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+  }
+
+  .menu a:hover {
+    background-color: #444;
+    border-radius: 5px;
+  }
+
+  .dropdown {
+    padding: 30px 0;
+    list-style: none;
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 30%;
+    background-color: #333;
+    min-width: 160px;
+    border-radius: 5px;
+    z-index: 9999;
+  }
+
+  .menu li:hover > .dropdown {
+    display: block;
+  }
+
+  .dropdown li {
+    border-bottom: 1px solid #444;
+    text-align: left;
+    padding: 10px 0;
+  }
+
+  .dropdown a {
+    padding: 10px 15px;
+    color: white;
+  }
+
+  .dropdown a:hover {
+    background-color: #555;
+  }
+
+
+  main {
+    max-width: 800px;
+    margin:20px auto;
+    background:white;
+    border-radius:6px;
+    padding: 15px;
+    position: relative;
+  }
+  h1 {
+    text-align:center;
+    margin-bottom: 1rem;
+  }
+  .slideshow-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  .slides {
+    display: none;
+    width: 100%;
+    border-radius: 6px;
+  }
+  .active-slide {
+    display: block;
+  }
+  .prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    margin-top: -22px;
+    padding: 12px;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+    background-color: rgba(0,0,0,0.5);
+    transition: background-color 0.3s ease;
+  }
+  .next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+  }
+  .prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+  }
+  .dots {
+    text-align: center;
+    margin-top: 10px;
+  }
+  .dot {
+    cursor: pointer;
+    height: 14px;
+    width: 14px;
+    margin: 0 6px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+  }
+  .dot.active,
+  .dot:hover {
+    background-color: #007bff;
+  }
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color:#222;
+    color:white;
+    padding: 12px 20px;
+    text-align:center;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <ul class="menu">
+      <li><a href="./index.html">Home</a></li>
+      <li>
+        <a href="#">More</a>
+        <ul class="dropdown">
+
+          <li><a href="./StaticImageGallery.html">Static Gallery</a></li>
+          <li><a href="./LightboxGallery.html">Lightbox Gallery</a></li>
+          <li><a href="./ThumbnailPreviewGallery.html">Thumbnail Gallery</a></li>
+          <li><a href="./FilterableGallery.html">Filterable Gallery</a></li>
+          <li><a href="./SlideshowGallery.html">Slideshow Gallery</a></li>
+          <li><a href="./HoverEffectGallery.html">Hover Gallery</a></li>
+          <li><a href="./AnimatedGallery.html">Animated Gallery</a></li>
+          <li><a href="./InfiniteScroll.html">Scroll Gallery</a></li>
+          <li><a href="./DragDropGallery.html">Drag & Drop</a></li>
+          <li><a href="./MixedGallery.html">Mixed Gallery</a></li>
+
+        </ul>
+
+      </li>
+
+    </ul>
+  </nav>
+  <h1>Slideshow / Carousel Gallery</h1>
+</header>
+
+<main>
+  <div class="slideshow-container">
+    <img class="slides active-slide" src="https://picsum.photos/id/1011/800/500" alt="Slide 1" />
+    <img class="slides" src="https://picsum.photos/id/1015/800/500" alt="Slide 2" />
+    <img class="slides" src="https://picsum.photos/id/1016/800/500" alt="Slide 3" />
+    <img class="slides" src="https://picsum.photos/id/1021/800/500" alt="Slide 4" />
+    <a class="prev" title="Previous">&#10094;</a>
+    <a class="next" title="Next">&#10095;</a>
+  </div>
+  <div class="dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+</main>
+
+<footer>
+  <p>&copy; 2025 Gallery Website</p>
+</footer>
+
+<script>
+  (function(){
+    let slideIndex = 0;
+    const slides = document.querySelectorAll('.slides');
+    const dots = document.querySelectorAll('.dot');
+    const prev = document.querySelector('.prev');
+    const next = document.querySelector('.next');
+    let timer;
+
+    function showSlide(index) {
+      if(index >= slides.length) slideIndex = 0;
+      if(index < 0) slideIndex = slides.length - 1;
+      else slideIndex = index;
+
+      slides.forEach((slide,i) => {
+        slide.classList.toggle('active-slide', i === slideIndex);
+        dots[i].classList.toggle('active', i === slideIndex);
+      });
+    }
+
+    function nextSlide() {
+      showSlide(slideIndex + 1);
+    }
+    function prevSlideFunc() {
+      showSlide(slideIndex - 1);
+    }
+
+    prev.addEventListener('click', () => {
+      prevSlideFunc();
+      resetTimer();
+    });
+
+    next.addEventListener('click', () => {
+      nextSlide();
+      resetTimer();
+    });
+
+    dots.forEach((dot, i) => {
+      dot.addEventListener('click', () => {
+        showSlide(i);
+        resetTimer();
+      });
+    });
+
+    function resetTimer() {
+      clearInterval(timer);
+      timer = setInterval(nextSlide, 4000);
+    }
+
+    // start timer
+    timer = setInterval(nextSlide, 4000);
+  })();
+</script>
+
+</body>
+</html>

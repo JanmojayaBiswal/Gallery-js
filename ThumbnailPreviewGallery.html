@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Thumbnail Preview Gallery</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin:0; 
+    padding:0;
+    background:#fbfbfb;
+    padding-bottom: 100px;
+  }
+  header {
+    background:#222;
+    color:white;
+    padding:12px 20px;
+    text-align:center;
+  }
+  /* nav a {
+    color:white;
+    margin: 0 10px;
+    text-decoration:none;
+    font-weight:bold;
+  }
+  nav a:hover {
+    text-decoration:underline;
+  } */
+
+  .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: right;
+  }
+
+  .menu li {
+    position: relative;
+  }
+
+  .menu > li {
+    margin-right: 20px;
+  }
+
+  .menu a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+  }
+
+  .menu a:hover {
+    background-color: #444;
+    border-radius: 5px;
+  }
+
+  .dropdown {
+    padding: 0;
+    list-style: none;
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 30%;
+    background-color: #333;
+    min-width: 160px;
+    border-radius: 5px;
+    z-index: 9999;
+  }
+
+  .menu li:hover > .dropdown {
+    display: block;
+  }
+
+  .dropdown li {
+    border-bottom: 1px solid #444;
+    text-align: left;
+    padding: 10px 0;
+  }
+
+  .dropdown a {
+    padding: 10px 15px;
+    color: white;
+  }
+
+  .dropdown a:hover {
+    background-color: #555;
+  }
+
+
+  main {
+    max-width: 900px;
+    margin:20px auto;
+    background:white;
+    border-radius:6px;
+    padding: 15px;
+  }
+  h1 {
+    text-align:center;
+    margin-bottom: 1em;
+  }
+  .main-image {
+    width: 100%;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-bottom: 15px;
+  }
+  .thumbnails {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+  }
+  .thumbnails img {
+    width: 100px;
+    height: 66px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.3s ease;
+  }
+  .thumbnails img:hover,
+  .thumbnails img.active {
+    border-color: #007bff;
+  }
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color:#222;
+    color:white;
+    padding: 12px 20px;
+    text-align:center;
+}
+
+</style>
+</head>
+<body>
+
+<header>
+  <nav>
+    <ul class="menu">
+      <li><a href="./index.html">Home</a></li>
+      <li>
+        <a href="#">More</a>
+        <ul class="dropdown">
+
+          <li><a href="./StaticImageGallery.html">Static Gallery</a></li>
+          <li><a href="./LightboxGallery.html">Lightbox Gallery</a></li>
+          <li><a href="./ThumbnailPreviewGallery.html">Thumbnail Gallery</a></li>
+          <li><a href="./FilterableGallery.html">Filterable Gallery</a></li>
+          <li><a href="./SlideshowGallery.html">Slideshow Gallery</a></li>
+          <li><a href="./HoverEffectGallery.html">Hover Gallery</a></li>
+          <li><a href="./AnimatedGallery.html">Animated Gallery</a></li>
+          <li><a href="./InfiniteScroll.html">Scroll Gallery</a></li>
+          <li><a href="./DragDropGallery.html">Drag & Drop</a></li>
+          <li><a href="./MixedGallery.html">Mixed Gallery</a></li>
+
+        </ul>
+
+      </li>
+
+    </ul>
+  </nav>
+  <h1>Thumbnail Preview Gallery</h1>
+</header>
+
+<main>
+  <img id="mainImage" class="main-image" src="https://picsum.photos/id/10/900/600" alt="Main preview image" />
+  <div class="thumbnails">
+    <img src="https://picsum.photos/id/10/200/133" alt="Thumbnail 1" data-large="https://picsum.photos/id/10/900/600" class="active" />
+    <img src="https://picsum.photos/id/20/200/133" alt="Thumbnail 2" data-large="https://picsum.photos/id/20/900/600" />
+    <img src="https://picsum.photos/id/30/200/133" alt="Thumbnail 3" data-large="https://picsum.photos/id/30/900/600" />
+    <img src="https://picsum.photos/id/40/200/133" alt="Thumbnail 4" data-large="https://picsum.photos/id/40/900/600" />
+    <img src="https://picsum.photos/id/50/200/133" alt="Thumbnail 5" data-large="https://picsum.photos/id/50/900/600" />
+  </div>
+</main>
+
+<footer>
+  <p>&copy;2025 Gallery Website</p>
+</footer>
+
+<script>
+  (function(){
+    const mainImage = document.getElementById('mainImage');
+    const thumbnails = document.querySelectorAll('.thumbnails img');
+
+    thumbnails.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        // Update main image source
+        mainImage.src = thumb.dataset.large;
+        mainImage.alt = thumb.alt;
+
+        // Update active class
+        thumbnails.forEach(img => img.classList.remove('active'));
+        thumb.classList.add('active');
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>

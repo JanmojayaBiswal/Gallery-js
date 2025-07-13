@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Drag & Drop Reorderable Gallery</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin:0; 
+    padding:0;
+    background:#fafafa;
+    padding-bottom: 100px;
+  }
+  header {
+    background:#222;
+    color:white;
+    padding:12px 20px;
+    text-align:center;
+  }
+  /* nav a {
+    color:white;
+    margin: 0 10px;
+    text-decoration:none;
+    font-weight:bold;
+  }
+  nav a:hover {
+    text-decoration:underline;
+  } */
+
+  .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: right;
+  }
+
+  .menu li {
+    position: relative;
+  }
+
+  .menu > li {
+    margin-right: 20px;
+  }
+
+  .menu a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+  }
+
+  .menu a:hover {
+    background-color: #444;
+    border-radius: 5px;
+  }
+
+  .dropdown {
+    padding: 30px 0;
+    list-style: none;
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 30%;
+    background-color: #333;
+    min-width: 160px;
+    border-radius: 5px;
+    z-index: 9999;
+  }
+
+  .menu li:hover > .dropdown {
+    display: block;
+  }
+
+  .dropdown li {
+    border-bottom: 1px solid #444;
+    text-align: left;
+    padding: 10px 0;
+  }
+
+  .dropdown a {
+    padding: 10px 15px;
+    color: white;
+  }
+
+  .dropdown a:hover {
+    background-color: #555;
+  }
+
+
+  main {
+    max-width: 960px;
+    margin: 20px auto;
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(160px, 1fr));
+    gap: 15px;
+  }
+  .gallery img {
+    width: 100%;
+    cursor: move;
+    border-radius: 6px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+  }
+  .dragging {
+    opacity: 0.5;
+  }
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color:#222;
+    color:white;
+    padding: 12px 20px;
+    text-align:center;
+}
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <ul class="menu">
+      <li><a href="./index.html">Home</a></li>
+      <li>
+        <a href="#">More</a>
+        <ul class="dropdown">
+
+          <li><a href="./StaticImageGallery.html">Static Gallery</a></li>
+          <li><a href="./LightboxGallery.html">Lightbox Gallery</a></li>
+          <li><a href="./ThumbnailPreviewGallery.html">Thumbnail Gallery</a></li>
+          <li><a href="./FilterableGallery.html">Filterable Gallery</a></li>
+          <li><a href="./SlideshowGallery.html">Slideshow Gallery</a></li>
+          <li><a href="./HoverEffectGallery.html">Hover Gallery</a></li>
+          <li><a href="./AnimatedGallery.html">Animated Gallery</a></li>
+          <li><a href="./InfiniteScroll.html">Scroll Gallery</a></li>
+          <li><a href="./DragDropGallery.html">Drag & Drop</a></li>
+          <li><a href="./MixedGallery.html">Mixed Gallery</a></li>
+
+        </ul>
+
+      </li>
+
+    </ul>
+  </nav>
+  <h1>Drag & Drop Reorderable Gallery</h1>
+</header>
+<main>
+  <div class="gallery" id="gallery" draggable="true">
+    <img src="https://picsum.photos/id/1019/300/200" alt="Image 1" draggable="true" />
+    <img src="https://picsum.photos/id/1018/300/200" alt="Image 2" draggable="true" />
+    <img src="https://picsum.photos/id/1015/300/200" alt="Image 3" draggable="true" />
+    <img src="https://picsum.photos/id/1016/300/200" alt="Image 4" draggable="true" />
+    <img src="https://picsum.photos/id/1020/300/200" alt="Image 5" draggable="true" />
+    <img src="https://picsum.photos/id/1027/300/200" alt="Image 6" draggable="true" />
+  </div>
+</main>
+<footer>
+  <p>&copy; 2025 Gallery Website</p>
+</footer>
+
+<script>
+  (function(){
+    const gallery = document.getElementById('gallery');
+    let dragSrcEl = null;
+
+    function handleDragStart(e) {
+      dragSrcEl = this;
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/html', this.outerHTML);
+      this.classList.add('dragging');
+    }
+
+    function handleDragOver(e) {
+      if (e.preventDefault) e.preventDefault(); // allows drop
+      e.dataTransfer.dropEffect = 'move';
+      return false;
+    }
+
+    function handleDrop(e) {
+      if (e.stopPropagation) e.stopPropagation(); // stops the browser from redirecting.
+
+      if (dragSrcEl != this) {
+        // Swap elements
+        const dropHTML = e.dataTransfer.getData('text/html');
+        this.insertAdjacentHTML('beforebegin', dropHTML);
+        dragSrcEl.parentNode.removeChild(dragSrcEl);
+        addDnDHandlers(this.previousSibling);
+      }
+      return false;
+    }
+
+    function handleDragEnd() {
+      this.classList.remove('dragging');
+    }
+
+    function addDnDHandlers(elem) {
+      elem.addEventListener('dragstart', handleDragStart, false);
+      elem.addEventListener('dragover', handleDragOver, false);
+      elem.addEventListener('drop', handleDrop, false);
+      elem.addEventListener('dragend', handleDragEnd, false);
+    }
+
+    const imgs = gallery.querySelectorAll('img');
+    imgs.forEach(img => addDnDHandlers(img));
+  })();
+</script>
+
+</body>
+</html>

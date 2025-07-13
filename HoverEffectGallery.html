@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Hover-Effect Gallery</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin:0; 
+    padding:0;
+    background:#fafafa;
+    padding-bottom: 100px;
+  }
+  header {
+    background:#222;
+    color:white;
+    padding:12px 20px;
+    text-align:center;
+  }
+  /* nav a {
+    color:white;
+    margin: 0 10px;
+    text-decoration:none;
+    font-weight:bold;
+  }
+  nav a:hover {
+    text-decoration:underline;
+  } */
+   .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: right;
+  }
+
+  .menu li {
+    position: relative;
+  }
+
+  .menu > li {
+    margin-right: 20px;
+  }
+
+  .menu a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+  }
+
+  .menu a:hover {
+    background-color: #444;
+    border-radius: 5px;
+  }
+
+  .dropdown {
+    padding: 30px 0;
+    list-style: none;
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 30%;
+    background-color: #333;
+    min-width: 160px;
+    border-radius: 5px;
+    z-index: 9999;
+  }
+
+  .menu li:hover > .dropdown {
+    display: block;
+  }
+
+  .dropdown li {
+    border-bottom: 1px solid #444;
+    text-align: left;
+    padding: 10px 0;
+  }
+
+  .dropdown a {
+    padding: 10px 15px;
+    color: white;
+  }
+
+  .dropdown a:hover {
+    background-color: #555;
+  }
+
+
+  main {
+    max-width: 960px;
+    margin: 20px auto;
+    background: white;
+    padding: 15px;
+    border-radius: 6px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 15px;
+  }
+  .gallery figure {
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .gallery img {
+    width: 100%;
+    display: block;
+    border-radius: 6px;
+    transition: transform 0.4s ease, filter 0.4s ease;
+    filter: grayscale(0%);
+  }
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background:rgba(0,0,0,0.6);
+    color: white;
+    opacity: 0;
+    padding: 10px;
+    font-size: 1rem;
+    border-radius: 0 0 6px 6px;
+    transition: opacity 0.4s ease;
+  }
+  .gallery figure:hover img {
+    transform: scale(1.15);
+    filter: grayscale(80%);
+  }
+  .gallery figure:hover .overlay {
+    opacity: 1;
+  }
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color:#222;
+    color:white;
+    padding: 12px 20px;
+    text-align:center;
+}
+
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <ul class="menu">
+      <li><a href="./index.html">Home</a></li>
+      <li>
+        <a href="#">More</a>
+        <ul class="dropdown">
+
+          <li><a href="./StaticImageGallery.html">Static Gallery</a></li>
+          <li><a href="./LightboxGallery.html">Lightbox Gallery</a></li>
+          <li><a href="./ThumbnailPreviewGallery.html">Thumbnail Gallery</a></li>
+          <li><a href="./FilterableGallery.html">Filterable Gallery</a></li>
+          <li><a href="./SlideshowGallery.html">Slideshow Gallery</a></li>
+          <li><a href="./HoverEffectGallery.html">Hover Gallery</a></li>
+          <li><a href="./AnimatedGallery.html">Animated Gallery</a></li>
+          <li><a href="./InfiniteScroll.html">Scroll Gallery</a></li>
+          <li><a href="./DragDropGallery.html">Drag & Drop</a></li>
+          <li><a href="./MixedGallery.html">Mixed Gallery</a></li>
+
+        </ul>
+
+      </li>
+
+    </ul>
+  </nav>
+  <h1>Hover-Effect Gallery</h1>
+</header>
+<main>
+  <div class="gallery">
+    <figure>
+      <img src="https://picsum.photos/id/1050/300/200" alt="Mountain" />
+      <figcaption class="overlay">Mountain View</figcaption>
+    </figure>
+    <figure>
+      <img src="https://picsum.photos/id/1059/300/200" alt="City Skyline" />
+      <figcaption class="overlay">City Skyline</figcaption>
+    </figure>
+    <figure>
+      <img src="https://picsum.photos/id/1062/300/200" alt="Forest" />
+      <figcaption class="overlay">Forest</figcaption>
+    </figure>
+    <figure>
+      <img src="https://picsum.photos/id/1071/300/200" alt="Beach" />
+      <figcaption class="overlay">Beach</figcaption>
+    </figure>
+    <figure>
+      <img src="https://picsum.photos/id/1074/300/200" alt="Desert" />
+      <figcaption class="overlay">Desert</figcaption>
+    </figure>
+  </div>
+</main>
+<footer>
+  <p>&copy; 2025 Gallery Website</p>
+</footer>
+</body>
+</html>

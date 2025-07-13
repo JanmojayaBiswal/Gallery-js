@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Infinite Scroll Gallery</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    margin:0;
+    padding:0;
+    background:#fff;
+    padding-bottom: 100px;
+  }
+  header {
+    background:#222;
+    color:white;
+    padding:12px 20px;
+    text-align:center;
+  }
+  /* nav a {
+    color:white;
+    margin: 0 10px;
+    text-decoration:none;
+    font-weight:bold;
+  }
+  nav a:hover {
+    text-decoration:underline;
+  } */
+   .menu {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: right;
+  }
+
+  .menu li {
+    position: relative;
+  }
+
+  .menu > li {
+    margin-right: 20px;
+  }
+
+  .menu a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+  }
+
+  .menu a:hover {
+    background-color: #444;
+    border-radius: 5px;
+  }
+
+  .dropdown {
+    padding: 30px 0;
+    list-style: none;
+    display: none;
+    position: absolute;
+    top: 100%;
+    right: 30%;
+    background-color: #333;
+    min-width: 160px;
+    border-radius: 5px;
+    z-index: 9999;
+  }
+
+  .menu li:hover > .dropdown {
+    display: block;
+  }
+
+  .dropdown li {
+    border-bottom: 1px solid #444;
+    text-align: left;
+    padding: 10px 0;
+  }
+
+  .dropdown a {
+    padding: 10px 15px;
+    color: white;
+  }
+
+  .dropdown a:hover {
+    background-color: #555;
+  }
+
+
+  main {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 15px;
+  }
+  h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap: 15px;
+  }
+  .gallery img {
+    width: 100%;
+    border-radius: 6px;
+    display: block;
+  }
+  .loading {
+    text-align:center;
+    padding: 15px;
+    font-weight: bold;
+    color: #555;
+  }
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color:#222;
+    color:white;
+    padding: 12px 20px;
+    text-align:center;
+}
+
+</style>
+</head>
+<body>
+<header>
+  <nav>
+    <ul class="menu">
+      <li><a href="./index.html">Home</a></li>
+      <li>
+        <a href="#">More</a>
+        <ul class="dropdown">
+
+          <li><a href="./StaticImageGallery.html">Static Gallery</a></li>
+          <li><a href="./LightboxGallery.html">Lightbox Gallery</a></li>
+          <li><a href="./ThumbnailPreviewGallery.html">Thumbnail Gallery</a></li>
+          <li><a href="./FilterableGallery.html">Filterable Gallery</a></li>
+          <li><a href="./SlideshowGallery.html">Slideshow Gallery</a></li>
+          <li><a href="./HoverEffectGallery.html">Hover Gallery</a></li>
+          <li><a href="./AnimatedGallery.html">Animated Gallery</a></li>
+          <li><a href="./InfiniteScroll.html">Scroll Gallery</a></li>
+          <li><a href="./DragDropGallery.html">Drag & Drop</a></li>
+          <li><a href="./MixedGallery.html">Mixed Gallery</a></li>
+
+        </ul>
+
+      </li>
+
+    </ul>
+  </nav>
+  <h1>Infinite Scroll Gallery</h1>
+</header>
+<main>
+  <div class="gallery" id="gallery">
+    <!-- Initial images -->
+  </div>
+  <div class="loading" id="loading" style="display:none;">Loading more images...</div>
+</main>
+<footer>
+  <p>&copy; 2025 Gallery Website</p>
+</footer>
+
+<script>
+  (function(){
+    const gallery = document.getElementById('gallery');
+    const loading = document.getElementById('loading');
+    let page = 1;
+    const perPage = 8;
+    let loadingPage = false;
+
+    function loadImages() {
+      if(loadingPage) return;
+      loadingPage = true;
+      loading.style.display = 'block';
+
+      // Simulate API loading delay
+      setTimeout(() => {
+        for(let i=0; i<perPage; i++) {
+          const img = document.createElement('img');
+          const id = 1000 + (page-1)*perPage + i;
+          img.src = `https://picsum.photos/id/${id}/300/200`;
+          img.alt = `Image ${id}`;
+          img.style.borderRadius = '6px';
+          gallery.appendChild(img);
+        }
+        loading.style.display = 'none';
+        loadingPage = false;
+        page++;
+      }, 900);
+    }
+
+    function handleScroll() {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      if(scrollTop + clientHeight >= scrollHeight - 10) {
+        loadImages();
+      }
+    }
+
+    window.addEventListener('scroll', handleScroll);
+    loadImages(); // initial load
+  })();
+</script>
+</body>
+</html>
